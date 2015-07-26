@@ -1,5 +1,5 @@
 
-#This function caches the parts of an inversion matrix procedure. 
+#This function caches the parts of an inversion matrix procedure..
 
 makeCacheMatrix <- function(x = matrix()) {
   # 1. Set the value of the matrix:
