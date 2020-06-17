@@ -1,41 +1,33 @@
 
-#This function caches the parts of an inversion matrix procedure..
+  
+
+## This function sets the parameters to create an inversible matrix. 
 
 makeCacheMatrix <- function(x = matrix()) {
-  # 1. Set the value of the matrix:
-  invnul = NULL
-  setfunc = function(y) {    
+  m <- NULL ##sets the parameter of the null vector
+  set <- function(y) { ##sets the "set" function 
     x <<- y
-    invnul <<- NULL
-  
+    m <<- NULL
   }
-  # 2. get the value of the matrix:
-  getval = function() x
-  # 3. set the value of inverse of the matrix:
-  setinverse = function(inverse) invnul <<- inverse
-  # 4. get the value of inverse of the matrix:
-  getinverse = function() invnul
-  list( setfunc= setfunc, getval=getval, setinverse=setinverse, getinverse=getinverse)
+  get <- function() x ## sets the "get" function
+  setinv <- function(inv) m <<- inv ##set the parameter of the inversible matrix
+  getinv <- function() m ##plots the parameter of the inversible matrix
+  list(set = set, get = get,
+       setinv = setinv,
+       getinv = getinv)
 }
 
-# This function gets the inverse matrix based on the cache-based function. 
+
+## This function calculates the inverse cached function above. 
 
 cacheSolve <- function(x, ...) {
-  #1. Return the inverse matrix of x
-  invnul = x$getinverse()
-  
-  #2.  Get the matrix if calculated.
-  if (!is.null(invnul)){
+  m <- x$getinv()
+  if(!is.null(m)) { ##calculates if the inversible matrix exists. 
     message("getting cached data")
-        return(invnul)  }
-  
-  #3. If not, then calculates the inverse.
-  matinverse = x$getval()
-  invnul = solve(matinverse, ...)
-  
-  #4. Finally, sets the inverse 
-  x$setinverse(invnul)
-  
-  return(invnul)
+    return(m)
+  }
+  data <- x$get()
+  m <- solve(data, ...) ##calculates the inversible matrix
+  x$setinv(m)
+  m
 }
-
